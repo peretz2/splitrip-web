@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-itunes-app" content="app-id=YOUR_APP_ID">
+    <title>Join Trip - SpliTrip</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0A84FF 0%, #5AC8FA 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #000;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .trip-name {
+            background: linear-gradient(135deg, #0A84FF 0%, #5AC8FA 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .trip-name h2 {
+            font-size: 24px;
+            color: white;
+        }
+        
+        .message {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .download-button {
+            display: inline-block;
+            background: #0A84FF;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
+        
+        .download-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .features {
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .feature-icon {
+            font-size: 24px;
+            margin-right: 12px;
+        }
+        
+        .loading {
+            margin-bottom: 20px;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #0A84FF;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🎉</div>
+        <h1>You're Invited!</h1>
+        <p class="subtitle">Join your friend's trip on SpliTrip</p>
+        
+        <div class="trip-name">
+            <h2 id="tripName">Trip Invitation</h2>
+        </div>
+        
+        <p class="message">Download SpliTrip to accept the invitation and start splitting expenses together.</p>
+        
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p style="color: #666;">Opening SpliTrip...</p>
+        </div>
+        
+        <a href="#" id="downloadButton" class="download-button">Download SpliTrip</a>
+        
+        <div class="features">
+            <div class="feature">
+                <span class="feature-icon">💰</span>
+                <span>Split expenses easily</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">🔄</span>
+                <span>Real-time sync</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">📱</span>
+                <span>Pay with Bit or PayBox</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Get invitation ID from URL
+        const pathParts = window.location.pathname.split('/');
+        const invitationId = pathParts[pathParts.length - 1];
+        
+        // Try to open app if valid invitation ID
+        if (invitationId && invitationId.length === 8 && invitationId !== 'index.html') {
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            
+            // Try to open app via custom URL scheme
+            const appURL = `splitrip://join/${invitationId}`;
+            window.location.href = appURL;
+            
+            // Hide loading after 2 seconds if app didn't open
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+            }, 2000);
+            
+            // Update trip name (you can fetch from API later)
+            document.getElementById('tripName').textContent = 'Trip';
+        }
+        
+        // Set download button link (update with real App Store URL later)
+        document.getElementById('downloadButton').href = 'https://apps.apple.com/';
+    </script>
+</body>
+</html>
